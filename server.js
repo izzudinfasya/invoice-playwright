@@ -1,11 +1,18 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 import { generatePDF } from './generate.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(cors());
+
 app.use(bodyParser.json({ limit: '10mb' }));
+
+app.get('/', (req, res) => {
+    res.send('Welcome to the Invoice Playwright API!');
+});
 
 app.post('/api/generate-invoice', async (req, res) => {
     const { htmlContent, fileName } = req.body;
